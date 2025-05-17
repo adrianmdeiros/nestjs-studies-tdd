@@ -1,0 +1,22 @@
+import { Injectable } from '@nestjs/common';
+import { Player } from './player.entity';
+import { CreatePlayerDTO, createPlayerDtoSchema } from './dtos/create-player.dto';
+
+@Injectable()
+export class PlayersService {
+    create(dto: CreatePlayerDTO): Player {
+        const validPlayer = createPlayerDtoSchema.parse(dto)
+
+        return new Player(
+            validPlayer.name,
+            new Date (validPlayer.birth),
+            validPlayer.gender,
+            validPlayer.height
+        )
+
+    }
+
+    getAge(player: Player): number {
+        return player.getAge()
+    }
+}
