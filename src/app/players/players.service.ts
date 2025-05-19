@@ -15,8 +15,4 @@ export class PlayersService {
         )
 
     }
-
-    getAge(player: Player): number {
-        return player.getAge()
-    }
 }

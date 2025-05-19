@@ -6,4 +6,4 @@ import { ChampionshipService } from './championships.service';
   controllers: [ChampionshipController],
   providers: [ChampionshipService],
 })
-export class ChampionshipModule {}
+export class ChampionshipsModule {}

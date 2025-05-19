@@ -27,7 +27,7 @@ describe('PlayersService', () => {
     } as const
 
     const createdPlayer = service.create(dto)
-    const playerAge = service.getAge(createdPlayer)
+    const playerAge = createdPlayer.getAge()
 
     expect(playerAge).toBe(24)
   })
@@ -41,8 +41,8 @@ describe('PlayersService', () => {
     } as const
     const createdPlayer = service.create(dto)
 
-    expect(createdPlayer.getName()).toBe('Adrian')
-    expect(createdPlayer.getHeight()).toBe(1.70)
+    expect(createdPlayer.name).toBe('Adrian')
+    expect(createdPlayer.height).toBe(1.70)
   })
 
   it('should throw an exception when date of birth is invalid', () => {

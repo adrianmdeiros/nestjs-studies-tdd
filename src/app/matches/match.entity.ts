@@ -1,29 +1,39 @@
-import { Championship } from "../championship/championship.entity";
+import { Championship } from "../championships/championship.entity";
+import { Result } from "../results/result.entity";
+import { Stadium } from "../stadiums/stadium.entity";
 import { Team } from "../teams/team.entity";
 
 export class Match {
     constructor(
-        private id: number,
-        private date: Date,
-        private homeTeam: Team,
-        private awayTeam: Team,
-        private championship: Championship
+        public readonly id: number,
+        public readonly date: Date,
+        public readonly homeTeam: Team,
+        public readonly awayTeam: Team,
+        public readonly stadium: Stadium,
+        public readonly championship: Championship,
+        public readonly result: Result = Result.init()
     ) { }
 
-    getDate(): Date {
-        return this.date
+    withChampionship(championship: Championship): Match {
+        return new Match(
+            this.id,
+            this.date,
+            this.homeTeam,
+            this.awayTeam,
+            this.stadium,
+            championship,
+        )
     }
 
-    getHomeTeam(): Team {
-        return this.homeTeam
+    withResult(result: Result): Match {
+        return new Match(
+            this.id,
+            this.date,
+            this.homeTeam,
+            this.awayTeam,
+            this.stadium,
+            this.championship,
+            result
+        )
     }
-
-    getAwayTeam(): Team {
-        return this.awayTeam
-    }
-
-    getChampionship(): Championship {
-        return this.championship
-    }
-
 }

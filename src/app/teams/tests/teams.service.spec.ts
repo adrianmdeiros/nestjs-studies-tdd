@@ -3,8 +3,6 @@ import { TeamsService } from '../teams.service';
 import { Player } from '../../players/player.entity';
 import { Stadium } from '../../stadiums/stadium.entity';
 import { Team } from '../team.entity';
-import { Championship } from '../../championship/championship.entity';
-import { Match } from '../../matches/match.entity';
 
 describe('TeamsService', () => {
   let service: TeamsService;
@@ -29,28 +27,27 @@ describe('TeamsService', () => {
       new Player('Ney', new Date('1998-05-15'), 'M', 1.72),
     ];
 
-    const mockAverage = players.reduce((sum, player) => sum + player.getHeight(), 0) / players.length
+    const mockAverage = players.reduce((sum, player) => sum + player.height, 0) / players.length
 
     const playersHeightAverage = service.getPlayersHeightAverage(players)
     expect(playersHeightAverage).toEqual(mockAverage)
   })
 
-  it('should create a match', () => {
+  it('should add and remove a player from a team and correctly update the team players list.', () => {
     const morumbis = new Stadium(1, 'Morumbis', 'São Paulo')
-    const maracana = new Stadium(2, 'Maracanã', 'Rio de Janeiro')
     const saoPaulo = new Team(1, 'São Paulo', morumbis)
-    const flamengo = new Team(2, 'Flamengo', maracana)
-    const teams: Team[] = [
-      saoPaulo,
-      flamengo
-    ]
-    const brasileirao = new Championship(1, 2025, 'Brasileirao Serie A', teams)
-    const match = new Match(1, new Date('2025-10-20'), saoPaulo, flamengo, brasileirao)
+    const cr7 = new Player('Cristiano Ronaldo', new Date('1985-02-05'), 'M', 1.87, 1)
+    const flavioCacaRato = new Player('Flávio Caça Rato', new Date('1986-06-29'), 'M', 1.75, 2)
 
-    expect(match.getDate()).toStrictEqual(new Date('2025-10-20'))
-    expect(match.getHomeTeam()).toBe(saoPaulo)
-    expect(match.getAwayTeam()).toBe(flamengo)
-    expect(match.getChampionship()).toBe(brasileirao)
+    service.addPlayerToTeam(cr7, saoPaulo)
+    expect(saoPaulo.players[0]).toBe(cr7)
 
+    service.addPlayerToTeam(flavioCacaRato, saoPaulo)
+    expect(saoPaulo.players[0]).toBe(cr7)
+    expect(saoPaulo.players[1]).toBe(flavioCacaRato)
+    
+    service.removePlayerFromTeam(2, saoPaulo)
+    expect(saoPaulo.players.find(p => p.id === 2)).toBeUndefined();
   })
+
 });

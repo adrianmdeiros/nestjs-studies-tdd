@@ -1,11 +1,10 @@
-
 export class Player {
     constructor(
-        private name: string,
-        private birth: Date,
-        private gender: string,
-        private height: number,
-        private id?: number,
+        public readonly name: string,
+        public readonly birth: Date,
+        public readonly gender: string,
+        public readonly height: number,
+        public readonly id?: number
     ) { }
 
     getAge(): number {
@@ -19,11 +18,5 @@ export class Player {
         return playerAge
     }
 
-    getName(): string {
-        return this.name
-    }
 
-    getHeight(): number {
-        return this.height
-    }
 }

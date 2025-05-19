@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Player } from 'src/app/players/player.entity';
+import { Team } from './team.entity';
 
 @Injectable()
 export class TeamsService {
@@ -17,7 +18,15 @@ export class TeamsService {
     }
 
     calculatePlayersHeightAverage(players: Player[]): number {
-        const average = players.reduce((sum, player) => sum + player.getHeight(), 0) / players.length
+        const average = players.reduce((sum, player) => sum + player.height, 0) / players.length
         return average
+    }
+
+    addPlayerToTeam(player: Player, team: Team): void {
+        return team.addPlayer(player)
+    }
+
+    removePlayerFromTeam(id: number, team: Team): void {
+        return team.removePlayer(id)
     }
 }

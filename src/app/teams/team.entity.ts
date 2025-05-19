@@ -1,13 +1,27 @@
+import { Player } from "../players/player.entity";
 import { Stadium } from "../stadiums/stadium.entity";
 
 export class Team {
     constructor(
-        private id: number,
-        private name: string,
-        private stadium: Stadium
-    ){}
+        public readonly id: number,
+        public readonly name: string,
+        public readonly stadium: Stadium,
+        public players: Player[] = []
+    ) { }
 
-    getId(): number {
-        return this.id
+    addPlayer(player: Player): void {
+        if (this.hasPlayer(player)) {
+            throw new Error('Player is already in this team.')
+        }
+        this.players.push(player)
     }
+
+    private hasPlayer(newPlayer: Player): boolean {
+        return this.players.some(player => player.id === newPlayer.id)
+    }
+
+    removePlayer(id: number): void {
+        this.players = this.players.filter(player => player.id !== id)
+    }
+
 }
