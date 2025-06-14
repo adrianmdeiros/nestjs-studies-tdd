@@ -6,7 +6,7 @@ export const createPlayerDtoSchema = z.object({
         message: 'Invalid date of birth.'
     }),
     gender: z.enum(['M', 'F']),
-    height: z.number().positive({message: 'Invalid height.'}).min(1)
+    height: z.number().positive({ message: 'Invalid height.' }).min(1)
 })
 
 export type CreatePlayerDTO = z.infer<typeof createPlayerDtoSchema>
